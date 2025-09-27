@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>PakiPaki</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    body{font-family:sans-serif;max-width:720px;margin:40px auto;padding:0 12px}
+    h2{margin-bottom:8px}
+    .note{color:#555;margin:8px 0 16px}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    input[type="file"]{margin:8px 0}
+    button{padding:10px 14px;border:0;border-radius:8px;background:#111;color:#fff;cursor:pointer}
+    button[disabled]{background:#999;cursor:not-allowed}
+    .badge{display:inline-block;padding:6px 10px;border-radius:8px;color:#fff}
+    .normal{background:#22c55e}.suspect{background:#ef4444}
+    #status{margin:12px 0;color:#0b6efd}
+    #result{margin-top:12px}
+    pre{background:#f6f8fa;padding:10px;border-radius:6px;overflow:auto}
+    .footer{margin-top:32px;font-size:12px;color:#666}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <h2>🧠 PakiPaki — 파킨슨 조기 스크리닝(웹 데모)</h2>
+  <p class="note">WAV 파일을 선택하고 업로드하세요. 서버가 WAV만 허용합니다.</p>
+
+  <div class="row">
+    <input type="file" id="fileInput" accept=".wav,audio/wav" />
+    <button id="btnUpload" disabled>업로드</button>
+  </div>
+
+  <p id="status">대기중</p>
+  <div id="result"></div>
+
+  <div class="footer">
+    <p>설정 방법: <span class="mono">app.js</span> 첫 줄의 <span class="mono">API</span> 주소를 실제 API 도메인(HTTPS)으로 바꾸세요.</p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
