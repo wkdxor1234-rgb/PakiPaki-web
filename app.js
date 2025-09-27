@@ -1,5 +1,5 @@
 // ★ API 주소를 실제 값으로 바꾸세요 (HTTPS 필수). 예: https://api.your-domain.com
-const API = "https://CHANGE_ME.example.com";
+const API = "https://api.your-domain.com";
 
 const statusEl = document.getElementById('status');
 const resultEl = document.getElementById('result');
