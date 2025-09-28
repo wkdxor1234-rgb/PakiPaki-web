@@ -29,9 +29,11 @@ FRONTEND_ORIGINS = env_list("FRONTEND_ORIGINS", "*")
 MAX_MB = float(os.getenv("MAX_MB", "30"))
 ALLOWED_EXT = set([x.lower() for x in env_list("ALLOWED_EXT", "wav")])
 
+# ✅ 정적 서빙: static/ 폴더를 루트(/)에 매핑
 app = Flask(__name__, static_folder="static", static_url_path="")
 app.config['MAX_CONTENT_LENGTH'] = int(MAX_MB * 1024 * 1024)
 
+# 같은 오리진에서 열면 CORS가 사실 필요 없지만, 남겨둬도 문제 없음
 if FRONTEND_ORIGINS == ["*"]:
     CORS(app)
 else:
@@ -45,9 +47,9 @@ def allowed_file(filename: str) -> bool:
 def too_large(_):
     return jsonify(ok=False, error="File too large"), 413
 
+# ✅ 루트에서 홈페이지(index.html) 반환
 @app.get("/")
 def root():
-    # https://<render-주소>/ 로 들어오면 static/index.html 반환
     return app.send_static_file("index.html")
 
 @app.get("/health")
@@ -72,9 +74,13 @@ def extract_features(y, sr):
 
 def vectorize(feats: dict, order: list | None):
     if order:
-        import numpy as np
         return np.array([feats.get(k, 0.0) for k in order], dtype=float).reshape(1, -1)
-    keys = ["zcr","rms","centroid","bandwidth","rolloff"] +            [f"contrast_{i}" for i in range(1,6)] +            [f"chroma_{i}" for i in range(1,13)] +            [f"mfcc_{i}" for i in range(1,14)]
+    keys = (
+        ["zcr","rms","centroid","bandwidth","rolloff"] +
+        [f"contrast_{i}" for i in range(1,6)] +
+        [f"chroma_{i}" for i in range(1,13)] +
+        [f"mfcc_{i}" for i in range(1,14)]
+    )
     return np.array([feats.get(k, 0.0) for k in keys], dtype=float).reshape(1, -1)
 
 def decode_audio(filename: str, raw: bytes):
