@@ -1,4 +1,3 @@
-// 같은 오리진이므로 절대주소 필요 없음. 상대경로 '/predict'로 호출합니다.
 const statusEl = document.getElementById('status');
 const resultEl = document.getElementById('result');
 const fileInput = document.getElementById('fileInput');
@@ -24,12 +23,20 @@ btnUpload.onclick = async () => {
   statusEl.textContent = '업로드 중...';
 
   const form = new FormData();
-  // 서버 계약: form-data 필드명은 반드시 'file'
-  form.append('file', wavFile, wavFile.name);
+  form.append('file', wavFile, wavFile.name); // 서버 계약: 필드명 'file'
 
   try {
     const res = await fetch('/predict', { method: 'POST', body: form });
-    const json = await res.json();
+
+    // ▲ 먼저 텍스트로 받고 → JSON 파싱 시도 (HTML 에러 페이지 대응)
+    const text = await res.text();
+    let json = null;
+    try { json = JSON.parse(text); }
+    catch {
+      statusEl.textContent = `실패: ${res.status}`;
+      resultEl.innerHTML = `<pre>${text}</pre>`;
+      return;
+    }
 
     if (!res.ok || json.ok === false) {
       statusEl.textContent = `실패: ${res.status} ${json?.error || ''}`;
@@ -38,10 +45,10 @@ btnUpload.onclick = async () => {
     }
 
     const diag = json.diagnosis || '-';
-    const cls = (diag.includes('정상')) ? 'normal' : 'suspect';
-    const conf = (json.confidence != null)
+    const cls  = diag.includes('정상') ? 'normal' : 'suspect';
+    const conf = json.confidence!=null
       ? `${(json.confidence*100).toFixed(1)}%`
-      : (json.probability != null ? `${(json.probability*100).toFixed(1)}%` : '-');
+      : (json.probability!=null ? `${(json.probability*100).toFixed(1)}%` : '-');
 
     statusEl.textContent = '성공';
     resultEl.innerHTML = `
@@ -53,4 +60,5 @@ btnUpload.onclick = async () => {
     statusEl.textContent = `에러: ${e.message}`;
   }
 };
+
 
