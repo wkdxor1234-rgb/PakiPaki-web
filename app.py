@@ -29,7 +29,7 @@ FRONTEND_ORIGINS = env_list("FRONTEND_ORIGINS", "*")
 MAX_MB = float(os.getenv("MAX_MB", "30"))
 ALLOWED_EXT = set([x.lower() for x in env_list("ALLOWED_EXT", "wav")])
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="")
 app.config['MAX_CONTENT_LENGTH'] = int(MAX_MB * 1024 * 1024)
 
 if FRONTEND_ORIGINS == ["*"]:
@@ -44,6 +44,11 @@ def allowed_file(filename: str) -> bool:
 @app.errorhandler(413)
 def too_large(_):
     return jsonify(ok=False, error="File too large"), 413
+
+@app.get("/")
+def root():
+    # https://<render-주소>/ 로 들어오면 static/index.html 반환
+    return app.send_static_file("index.html")
 
 @app.get("/health")
 def health():
