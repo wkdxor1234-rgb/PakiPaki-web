@@ -4,7 +4,6 @@ Flask==2.3.3
 flask-cors==4.0.0
 gunicorn==21.2.0
 
-# ⇩ 파이썬 3.12~3.13과 잘 맞는 조합 (numba/llvmlite 없이)
 numpy==2.2.2
 scipy==1.14.1
 librosa==0.10.2.post1
@@ -13,7 +12,8 @@ audioread==3.0.1
 pooch==1.8.1
 
 joblib==1.4.2
-scikit-learn==1.5.2
+scikit-learn==1.6.1
+
 
 
 
