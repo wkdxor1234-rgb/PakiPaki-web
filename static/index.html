@@ -35,9 +35,13 @@
 </head>
 <body>
   <h2>🧠 PakiPaki</h2>
-  <p>WAV 파일을 선택하고 업로드하세요.</p>
+  <p>WAV 또는 M4A 파일을 선택하고 업로드하세요.</p>
 
-  <input type="file" id="fileInput" accept=".wav,audio/wav" />
+  <input
+    type="file"
+    id="fileInput"
+    accept=".wav,.m4a,audio/wav,audio/x-m4a,audio/mp4"
+  />
   <button id="btnUpload" disabled>업로드</button>
 
   <p id="status">대기중</p>
@@ -46,3 +50,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
