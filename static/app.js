@@ -103,6 +103,4 @@ btnUpload.onclick = async () => {
   }
 };
 
-};
-
 
