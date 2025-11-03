@@ -6,31 +6,27 @@
   <meta name="theme-color" content="#f6efe6">
   <title>PakiPaki</title>
   <style>
-    /* 베이지 테마 */
     body{
       font-family:sans-serif;
       max-width:720px; margin:40px auto; padding:0 12px;
-      background:#f6efe6;        /* ✅ 베이지 배경 */
-      color:#231f1a;             /* 본문 텍스트(짙은 브라운) */
+      background:#f6efe6;
+      color:#231f1a;
     }
     button{
       padding:10px 14px; border:0; border-radius:8px;
-      background:#1d2a60; color:#fff; cursor:pointer;  /* 진한 남색 버튼 */
+      background:#1d2a60; color:#fff; cursor:pointer;
     }
-    button:hover{opacity:.92}
     button[disabled]{background:#999; cursor:not-allowed}
-
-    .badge{display:inline-block; padding:6px 10px; border-radius:8px; color:#fff}
-    .normal{background:#22c55e}.suspect{background:#ef4444}
-
-    #status{margin:12px 0; color:#1d2a60}  /* 상태 텍스트 색상을 테마에 맞춤 */
-
-    /* 결과 박스도 베이지에 맞춰 톤 다운 */
+    #status{margin:12px 0; color:#1d2a60}
     pre{
-      background:#fff7ed;         /* 아주 옅은 살구 */
-      border:1px solid #eadfce;   /* 연한 베이지 테두리 */
-      padding:10px; border-radius:6px; overflow:auto
+      background:#fff7ed; border:1px solid #eadfce;
+      padding:10px; border-radius:6px; overflow:auto;
     }
+    .guide{
+      background:#fff; border:1px solid #eadfce;
+      border-radius:10px; padding:12px; margin-top:20px;
+    }
+    .guide small{color:#6b6358}
   </style>
 </head>
 <body>
@@ -47,8 +43,27 @@
   <p id="status">대기중</p>
   <div id="result"></div>
 
-  <script src="app.js?v=4"></script>
+  <!-- 🔽 여기부터 녹음 안내 블록 -->
+  <div class="guide">
+    <strong>📋 권장 녹음 안내</strong><br>
+    <small>가능하면 아래 순서 중 한두 개를 말해서 녹음해 주세요. 이렇게 하면 분석이 더 안정적입니다.</small>
+    <details style="margin-top:10px">
+      <summary>표준 음성 스크립트 열기</summary>
+      <ul>
+        <li>모음 길게: “아———”, “이———”, “우———” (각 5–10초)</li>
+        <li>빠른 반복: “파-파-파…”, “타-타-타…”, “파타카-파타카…” (각 5초)</li>
+        <li>문장 읽기: “오늘은 날씨가 맑습니다.” 등 3~5문장</li>
+        <li>숫자 읽기: “하나, 둘, 셋, … 스물”</li>
+        <li>자유 발화: 오늘 한 일 30초 설명</li>
+      </ul>
+      <p style="margin-top:6px">
+        불편하면 중간에 멈추셔도 됩니다.
+      </p>
+    </details>
+  </div>
+  <!-- 🔼 여기까지 -->
 
+  <script src="app.js?v=4"></script>
 </body>
 </html>
 
